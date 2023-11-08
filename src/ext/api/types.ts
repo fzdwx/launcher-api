@@ -15,6 +15,7 @@ const userInputAction = 'userInput';
 const setConfigAction = 'setLauncherConfig';
 const changeInputStateAction = 'changeInputState';
 const commandKeyDownAction = 'commandKeyDown';
+const execCommandAction = 'execCommand';
 const openUrlAction = 'openUrl';
 
 function buildEvent<T>(action: string, data?: T): ExtEvent<T> {
@@ -25,7 +26,7 @@ function buildEvent<T>(action: string, data?: T): ExtEvent<T> {
 }
 
 export {
-    exitAction, getClipTextAction, setClipTextAction,
+    exitAction, getClipTextAction, setClipTextAction,execCommandAction,
     userInputAction, setConfigAction,
     changeInputStateAction, commandKeyDownAction, openUrlAction,
     buildEvent

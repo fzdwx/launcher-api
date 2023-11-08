@@ -1,6 +1,6 @@
 // @ts-ignore
 import {
-    buildEvent, changeInputStateAction, commandKeyDownAction,
+    buildEvent, changeInputStateAction, commandKeyDownAction, execCommandAction,
     exitAction,
     ExtEvent,
     getClipTextAction,
@@ -66,6 +66,10 @@ function openUrl(url: string) {
     window.parent.postMessage(buildEvent(openUrlAction, url), '*');
 }
 
+function executeCommand(command: string) {
+    window.parent.postMessage(buildEvent(execCommandAction, command), '*');
+}
+
 const commandEvent = useCommandEvent();
 
 const userInputHandlerMap = new Map<string, (text: string) => void>();
@@ -100,6 +104,6 @@ function getConfig() {
 
 export {
     exit, getClipText, setClipText,
-    onUserInput, changeInputState, openUrl,
+    onUserInput, changeInputState, openUrl,executeCommand,
     userInputHandlerMap, getConfig
 }
