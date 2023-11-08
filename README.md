@@ -8,26 +8,10 @@ pnpm i @fzdwx/launcher-api
 
 ## Api
 
-### `exit()`
-
-退出当前扩展
-
-### ` getClipText(callback: (text: string) => void)`
-
-获取剪贴板文本, 通过回调函数返回
-
-### `setClipText(text: string)`
-
-设置剪贴板文本
-
-### `onUserInput(extName: string, callback: (text: string) => void)`
-
-监听用户输入, 通过回调函数返回
-
-### `changeInputState(state: InputState)`
-
-改变输入状态
-
-### `openUrl(url: string)`
-
-打开链接
+1. `exit()` 退出当前扩展
+2. ` getClipText(callback: (text: string) => void)` 获取剪贴板文本, 通过回调函数返回
+3. `setClipText(text: string)` 设置剪贴板文本
+4. `onUserInput(extName: string, callback: (text: string) => void)` 监听用户输入, 通过回调函数返回
+5. `changeInputState(state: InputState)` 改变输入状态
+6. `openUrl(url: string)` 打开链接
+7. `executeCommand(command: string)` 执行命令

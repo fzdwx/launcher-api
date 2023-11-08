@@ -26,7 +26,7 @@ function buildEvent<T>(action: string, data?: T): ExtEvent<T> {
 }
 
 export {
-    exitAction, getClipTextAction, setClipTextAction,execCommandAction,
+    exitAction, getClipTextAction, setClipTextAction, execCommandAction,
     userInputAction, setConfigAction,
     changeInputStateAction, commandKeyDownAction, openUrlAction,
     buildEvent
