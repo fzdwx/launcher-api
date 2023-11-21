@@ -6,6 +6,7 @@ export interface ExtEvent<T> {
 export interface InputState {
     loading?: boolean;
     disableFilter?: boolean;
+    hide?: boolean;
 }
 
 const exitAction = 'exit';
