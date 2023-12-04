@@ -2,10 +2,8 @@
 export PATH := "./node_modules/.bin:" + env_var('PATH')
 
 build:
+  rm -rf dist
   pnpm run build
 
 pub: build
-    pnpm publish --no-git-checks --access public
-
-link:
-  pnpm link
+    pnpm publish --access public
