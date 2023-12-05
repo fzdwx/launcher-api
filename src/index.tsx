@@ -62,6 +62,10 @@ type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'o
      */
     value?: string
     /**
+     * show loading indicator
+     */
+    loading?: boolean
+    /**
      * Event handler called when the search value changes.
      */
     onValueChange?: (search: string) => void
@@ -738,7 +742,7 @@ const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwa
  * All props are forwarded to the underyling `input` element.
  */
 const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
-    const {onValueChange, ...etc} = props
+    const {onValueChange, loading, ...etc} = props
     const isControlled = props.value != null
     const store = useStore()
     const search = useCmdk((state) => state.search)
@@ -757,30 +761,37 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
     }, [props.value])
 
     return (
-        <input
-            ref={forwardedRef}
-            {...etc}
-            cmdk-input=""
-            autoComplete="off"
-            autoCorrect="off"
-            spellCheck={false}
-            aria-autocomplete="list"
-            role="combobox"
-            aria-expanded={true}
-            aria-controls={context.listId}
-            aria-labelledby={context.labelId}
-            aria-activedescendant={selectedItemId}
-            id={context.inputId}
-            type="text"
-            value={isControlled ? props.value : search}
-            onChange={(e) => {
-                if (!isControlled) {
-                    store.setState('search', e.target.value)
-                }
+        <div>
+            <input
+                ref={forwardedRef}
+                {...etc}
+                cmdk-input=""
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck={false}
+                aria-autocomplete="list"
+                role="combobox"
+                aria-expanded={true}
+                aria-controls={context.listId}
+                aria-labelledby={context.labelId}
+                aria-activedescendant={selectedItemId}
+                id={context.inputId}
+                type="text"
+                value={isControlled ? props.value : search}
+                onChange={(e) => {
+                    if (!isControlled) {
+                        store.setState('search', e.target.value)
+                    }
 
-                onValueChange?.(e.target.value)
-            }}
-        />
+                    onValueChange?.(e.target.value)
+                }}
+            />
+            {
+                props.loading ? (
+                    <hr cmdk-raycast-loader="" className='cmdk-raycast-loader-common'/>
+                ) : <hr className='cmdk-raycast-loader-common'/>
+            }
+        </div>
     )
 })
 
