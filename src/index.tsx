@@ -509,23 +509,17 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
     }
 
     const last = () => {
+        updateSelectedToIndex(getValidItems().length - 1)
+
         const item = getSelectedItem();
         if (item) {
             const event = new Event(ITEM_HOVER_EVENT)
             item.dispatchEvent(event)
         }
-
-        updateSelectedToIndex(getValidItems().length - 1)
     }
 
     const next = (e: React.KeyboardEvent) => {
         e.preventDefault()
-
-        const item = getSelectedItem();
-        if (item) {
-            const event = new Event(ITEM_HOVER_EVENT)
-            item.dispatchEvent(event)
-        }
 
         if (e.metaKey) {
             // Last item
@@ -537,16 +531,16 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
             // Next item
             updateSelectedByChange(1)
         }
-    }
-
-    const prev = (e: React.KeyboardEvent) => {
-        e.preventDefault()
 
         const item = getSelectedItem();
         if (item) {
             const event = new Event(ITEM_HOVER_EVENT)
             item.dispatchEvent(event)
         }
+    }
+
+    const prev = (e: React.KeyboardEvent) => {
+        e.preventDefault()
 
         if (e.metaKey) {
             // First item
@@ -557,6 +551,12 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
         } else {
             // Previous item
             updateSelectedByChange(-1)
+        }
+
+        const item = getSelectedItem();
+        if (item) {
+            const event = new Event(ITEM_HOVER_EVENT)
+            item.dispatchEvent(event)
         }
     }
 
@@ -673,7 +673,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) =
             element.removeEventListener(SELECT_EVENT, onSelect)
             element.removeEventListener(ITEM_HOVER_EVENT, onHover)
         }
-    }, [render, props.onSelect, props.onHover,props.disabled])
+    }, [render, props.onSelect, props.onHover, props.disabled])
 
     function onSelect() {
         select()
