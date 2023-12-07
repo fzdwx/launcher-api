@@ -7,4 +7,5 @@ build:
   pnpm run build
 
 pub: build
+    npm version patch
     pnpm publish --access public
