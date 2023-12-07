@@ -674,6 +674,10 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) =
 
     if (!render) return null
 
+    if (selected){
+        onHover()
+    }
+
     const {disabled, value: _, onSelect: __, onHover: ___, ...etc} = props
 
     return (
@@ -689,7 +693,6 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) =
             data-selected={selected || undefined}
             onPointerMove={disabled ? undefined : () => {
                 select()
-                onHover()
             }}
             onClick={disabled ? undefined : onSelect}
         >
