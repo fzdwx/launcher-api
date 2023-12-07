@@ -508,7 +508,15 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
         }
     }
 
-    const last = () => updateSelectedToIndex(getValidItems().length - 1)
+    const last = () => {
+        const item = getSelectedItem();
+        if (item) {
+            const event = new Event(ITEM_HOVER_EVENT)
+            item.dispatchEvent(event)
+        }
+
+        updateSelectedToIndex(getValidItems().length - 1)
+    }
 
     const next = (e: React.KeyboardEvent) => {
         e.preventDefault()
@@ -533,6 +541,12 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
 
     const prev = (e: React.KeyboardEvent) => {
         e.preventDefault()
+
+        const item = getSelectedItem();
+        if (item) {
+            const event = new Event(ITEM_HOVER_EVENT)
+            item.dispatchEvent(event)
+        }
 
         if (e.metaKey) {
             // First item
