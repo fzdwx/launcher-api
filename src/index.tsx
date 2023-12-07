@@ -39,6 +39,8 @@ type ItemProps = Children &
     disabled?: boolean
     /** Event handler for when this item is selected, either via click or keyboard selection. */
     onSelect?: (value: string) => void
+    /** Event hover */
+    onHover?: () => void
     /**
      * A unique value for this item.
      * If no value is provided, it will be inferred from `children` or the rendered `textContent`. If your `textContent` changes between renders, you _must_ provide a stable, unique `value`.
@@ -144,6 +146,7 @@ const GROUP_HEADING_SELECTOR = `[cmdk-group-heading=""]`
 const ITEM_SELECTOR = `[cmdk-item=""]`
 const VALID_ITEM_SELECTOR = `${ITEM_SELECTOR}:not([aria-disabled="true"])`
 const SELECT_EVENT = `cmdk-item-select`
+const ITEM_HOVER_EVENT = `cmdk-item-hover`
 const VALUE_ATTR = `data-value`
 const defaultFilter: CommandProps['filter'] = (value, search) => commandScore(value, search)
 
@@ -510,6 +513,12 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
     const next = (e: React.KeyboardEvent) => {
         e.preventDefault()
 
+        const item = getSelectedItem();
+        if (item) {
+            const event = new Event(ITEM_HOVER_EVENT)
+            item.dispatchEvent(event)
+        }
+
         if (e.metaKey) {
             // Last item
             last()
@@ -645,12 +654,20 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) =
         const element = ref.current
         if (!element || props.disabled) return
         element.addEventListener(SELECT_EVENT, onSelect)
-        return () => element.removeEventListener(SELECT_EVENT, onSelect)
+        element.addEventListener(ITEM_HOVER_EVENT, onHover)
+        return () =>{
+            element.removeEventListener(SELECT_EVENT, onSelect)
+            element.removeEventListener(ITEM_HOVER_EVENT, onHover)
+        }
     }, [render, props.onSelect, props.disabled])
 
     function onSelect() {
         select()
         propsRef.current.onSelect?.(value.current)
+    }
+
+    function onHover() {
+        propsRef.current.onHover?.()
     }
 
     function select() {
