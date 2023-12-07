@@ -655,11 +655,11 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) =
         if (!element || props.disabled) return
         element.addEventListener(SELECT_EVENT, onSelect)
         element.addEventListener(ITEM_HOVER_EVENT, onHover)
-        return () =>{
+        return () => {
             element.removeEventListener(SELECT_EVENT, onSelect)
             element.removeEventListener(ITEM_HOVER_EVENT, onHover)
         }
-    }, [render, props.onSelect, props.disabled])
+    }, [render, props.onSelect, props.onHover,props.disabled])
 
     function onSelect() {
         select()
@@ -676,7 +676,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) =
 
     if (!render) return null
 
-    const {disabled, value: _, onSelect: __, ...etc} = props
+    const {disabled, value: _, onSelect: __, onHover: __, ...etc} = props
 
     return (
         <div
