@@ -127,6 +127,7 @@ type State = {
     search: string
     value: string
     filtered: { count: number; items: Map<string, number>; groups: Set<string> }
+    getSelectItem: () => HTMLElement
 }
 type Store = {
     subscribe: (callback: () => void) => () => void
@@ -174,6 +175,9 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
             /** Set of groups with at least one visible item. */
             groups: new Set(),
         },
+        getSelectItem() {
+            return window.document.querySelector('[cmdk-item=""][aria-selected="true"]')
+        }
     }))
     const allItems = useLazyRef<Set<string>>(() => new Set()) // [...itemIds]
     const allGroups = useLazyRef<Map<string, Set<string>>>(() => new Map()) // groupId → [...itemIds]
