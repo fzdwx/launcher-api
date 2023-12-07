@@ -514,12 +514,6 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
 
     const last = () => {
         updateSelectedToIndex(getValidItems().length - 1)
-
-        const item = getSelectedItem();
-        if (item) {
-            const event = new Event(ITEM_HOVER_EVENT)
-            item.dispatchEvent(event)
-        }
     }
 
     const next = (e: React.KeyboardEvent) => {
@@ -535,12 +529,6 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
             // Next item
             updateSelectedByChange(1)
         }
-
-        const item = getSelectedItem();
-        if (item) {
-            const event = new Event(ITEM_HOVER_EVENT)
-            item.dispatchEvent(event)
-        }
     }
 
     const prev = (e: React.KeyboardEvent) => {
@@ -555,12 +543,6 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
         } else {
             // Previous item
             updateSelectedByChange(-1)
-        }
-
-        const item = getSelectedItem();
-        if (item) {
-            const event = new Event(ITEM_HOVER_EVENT)
-            item.dispatchEvent(event)
         }
     }
 
@@ -672,12 +654,10 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) =
         const element = ref.current
         if (!element || props.disabled) return
         element.addEventListener(SELECT_EVENT, onSelect)
-        element.addEventListener(ITEM_HOVER_EVENT, onHover)
         return () => {
             element.removeEventListener(SELECT_EVENT, onSelect)
-            element.removeEventListener(ITEM_HOVER_EVENT, onHover)
         }
-    }, [render, props.onSelect, props.onHover, props.disabled])
+    }, [render, props.onSelect, props.disabled])
 
     function onSelect() {
         select()
@@ -707,7 +687,10 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) =
             aria-selected={selected || undefined}
             data-disabled={disabled || undefined}
             data-selected={selected || undefined}
-            onPointerMove={disabled ? undefined : select}
+            onPointerMove={disabled ? undefined : () => {
+                select()
+                onHover()
+            }}
             onClick={disabled ? undefined : onSelect}
         >
             {props.children}
