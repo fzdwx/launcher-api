@@ -409,6 +409,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
 
     function selectFirstItem() {
         const item = getValidItems().find((item) => !item.ariaDisabled)
+        console.log(item)
         const value = item?.getAttribute(VALUE_ATTR)
         store.setState('value', value || undefined)
     }
