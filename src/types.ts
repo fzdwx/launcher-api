@@ -1,7 +1,7 @@
 export interface LauncherApi {
     hello(): Promise<string>
 
-    execCommand(command: string, args?: Array<string>): Promise<any>
+    execCommand(command: string, args?: Array<string>, terminal?: boolean): Promise<any>
 
     spawn(command: string, args?: Array<string>): Promise<any>
 
