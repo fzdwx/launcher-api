@@ -201,12 +201,6 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
     const labelId = React.useId()
     const inputId = React.useId()
 
-    itemEvent.on('select', (event) => {
-        if (event == 'selectFirst') {
-            selectFirstItem()
-        }
-    })
-
     const schedule = useScheduleLayoutEffect()
 
     /** Controlled mode `value` handling. */
@@ -241,9 +235,9 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
                     sort()
                     if (value === "") {  // if search is empty scroll to top and select first item
                         schedule(1, scrollTop)
-                        schedule(5, selectFirstItem)
+                        schedule(1, selectFirstItem)
                     } else {
-                        schedule(5, selectFirstItem)
+                        schedule(1, selectFirstItem)
                     }
                 } else if (key === 'value') {
                     // opts is a boolean referring to whether it should NOT be scrolled into view
