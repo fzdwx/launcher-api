@@ -8,6 +8,7 @@ import {
     StarIcon
 } from './icon'
 import mitt from "mitt";
+import {useKeyPress} from "ahooks";
 
 type Children = { children?: React.ReactNode }
 type DivProps = React.HTMLAttributes<HTMLDivElement>
@@ -566,6 +567,13 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
         }
     }
 
+
+
+    useKeyPress('Home',(e)=>{
+        e.preventDefault()
+        updateSelectedToIndex(0)
+    })
+
     return (
         <div
             ref={mergeRefs([ref, forwardedRef])}
@@ -573,8 +581,6 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
             cmdk-root=""
             onKeyDown={(e) => {
                 etc.onKeyDown?.(e)
-
-                console.log(e)
 
                 if (!e.defaultPrevented) {
                     switch (e.key) {
@@ -603,7 +609,6 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
                             break
                         }
                         case 'Home': {
-                            console.log("get home event")
                             // First item
                             e.preventDefault()
                             updateSelectedToIndex(0)
