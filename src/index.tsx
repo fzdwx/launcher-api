@@ -229,8 +229,6 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
                 if (Object.is(state.current[key], value)) return
                 state.current[key] = value
 
-                console.log(key, value)
-
                 if (key === 'search') {
                     // Filter synchronously before emitting back to children
                     filterItems()
@@ -603,6 +601,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
                             break
                         }
                         case 'Home': {
+                            console.log("get home event")
                             // First item
                             e.preventDefault()
                             updateSelectedToIndex(0)
