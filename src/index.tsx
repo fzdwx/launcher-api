@@ -412,12 +412,12 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
     function selectFirstItem() {
         const item = getValidItems().find((item) => !item.ariaDisabled)
         const value = item?.getAttribute(VALUE_ATTR)
-        store.setState('value', value || undefined)
+        store.setState('value', value || undefined, true)
     }
 
     function selectFirstItem2() {
         store.setState('value', '')
-        selectFirstItem()
+        schedule(7, selectFirstItem)
     }
 
     /** Filters the current items. */
