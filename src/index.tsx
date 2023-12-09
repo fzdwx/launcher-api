@@ -414,9 +414,11 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
         store.setState('value', value || undefined)
     }
 
-    function selectFirstItem2(){
-        selectFirstItem()
-        console.log(getValidItems())
+    function selectFirstItem2() {
+        const item = getAllItems().find((item) => !item.ariaDisabled)
+        console.log(item)
+        const value = item?.getAttribute(VALUE_ATTR)
+        store.setState('value', value || undefined)
     }
 
     /** Filters the current items. */
@@ -482,6 +484,10 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
 
     function getValidItems() {
         return Array.from(ref.current.querySelectorAll(VALID_ITEM_SELECTOR))
+    }
+
+    function getAllItems() {
+        return Array.from(ref.current.querySelectorAll(ITEM_SELECTOR))
     }
 
     /** Setters */
