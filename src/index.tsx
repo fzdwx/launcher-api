@@ -235,7 +235,6 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
                     sort()
                     if (value === "") {  // if search is empty scroll to top and select first item
                         schedule(1, scrollTop)
-                        store.emit()
                         schedule(1, selectFirstItem2)
                     } else {
                         schedule(1, selectFirstItem)
@@ -416,8 +415,8 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
     }
 
     function selectFirstItem2() {
-        const item = getAllItems()
-        console.log(item[0])
+        store.setState('value', undefined)
+        selectFirstItem()
     }
 
     /** Filters the current items. */
