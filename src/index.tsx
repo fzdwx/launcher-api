@@ -1,14 +1,13 @@
-// @ts-nocheck
 import * as RadixDialog from '@radix-ui/react-dialog'
 import * as React from 'react'
 import {commandScore} from './command-score'
 import {LauncherApi} from './types'
-import * as Popover from "@radix-ui/react-popover";
 import {
     WindowIcon,
     FinderIcon,
     StarIcon
 } from './icon'
+import mitt from "mitt";
 
 type Children = { children?: React.ReactNode }
 type DivProps = React.HTMLAttributes<HTMLDivElement>
@@ -160,6 +159,18 @@ const useStore = () => React.useContext(StoreContext)
 // @ts-ignore
 const GroupContext = React.createContext<Group>(undefined)
 
+type ItemEvent = {
+    select: "selectFirst",
+}
+const itemEvent = mitt<ItemEvent>()
+
+export const useItemEvent = () => {
+    return {
+        itemEvent
+    }
+}
+
+
 const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
     const ref = React.useRef<HTMLDivElement>(null)
     const state = useLazyRef<State>(() => ({
@@ -189,6 +200,12 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
     const listId = React.useId()
     const labelId = React.useId()
     const inputId = React.useId()
+
+    itemEvent.on('select', (event) => {
+        if (event == 'selectFirst') {
+            selectFirstItem()
+        }
+    })
 
     const schedule = useScheduleLayoutEffect()
 
@@ -674,7 +691,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) =
 
     if (!render) return null
 
-    if (selected){
+    if (selected) {
         onHover()
     }
 
