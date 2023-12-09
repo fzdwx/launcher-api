@@ -235,9 +235,10 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
                     sort()
                     if (value === "") {  // if search is empty scroll to top and select first item
                         schedule(1, scrollTop)
+                        store.emit()
                         schedule(1, selectFirstItem2)
                     } else {
-                        schedule(1, selectFirstItem2)
+                        schedule(1, selectFirstItem)
                     }
                 } else if (key === 'value') {
                     // opts is a boolean referring to whether it should NOT be scrolled into view
