@@ -160,18 +160,6 @@ const useStore = () => React.useContext(StoreContext)
 // @ts-ignore
 const GroupContext = React.createContext<Group>(undefined)
 
-type ItemEvent = {
-    select: "selectFirst",
-}
-const itemEvent = mitt<ItemEvent>()
-
-export const useItemEvent = () => {
-    return {
-        itemEvent
-    }
-}
-
-
 const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
     const ref = React.useRef<HTMLDivElement>(null)
     const state = useLazyRef<State>(() => ({
@@ -571,8 +559,6 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
         if (e.code == 'Home') {
             e.preventDefault()
             updateSelectedToIndex(0)
-            console.log('home')
-            console.log(getValidItems());
         }
     }
 
