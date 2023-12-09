@@ -229,6 +229,8 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
                 if (Object.is(state.current[key], value)) return
                 state.current[key] = value
 
+                console.log(key, value)
+
                 if (key === 'search') {
                     // Filter synchronously before emitting back to children
                     filterItems()
