@@ -568,10 +568,11 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
     }
 
 
-
-    useKeyPress('Home',(e)=>{
+    useKeyPress('Home', (e) => {
         e.preventDefault()
         updateSelectedToIndex(0)
+        console.log('home')
+        console.log(getValidItems());
     })
 
     return (
