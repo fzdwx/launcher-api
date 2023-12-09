@@ -961,7 +961,6 @@ export {
     FinderIcon,
     StarIcon
 } from './icon'
-export {atomWithDebounce} from './atoms'
 export type {LauncherApi}
 
 /**
