@@ -417,7 +417,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
 
     function selectFirstItem2() {
         store.setState('value', '')
-        schedule(7, selectFirstItem)
+        schedule(1, selectFirstItem)
     }
 
     /** Filters the current items. */
