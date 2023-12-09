@@ -19,7 +19,5 @@ export interface LauncherApi {
 
     show(): void
 
-    loadDevView(): void
-
-    loadMainView(): void
+    backToSelf(): void
 }
