@@ -415,6 +415,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
     }
 
     function selectFirstItem2(){
+        selectFirstItem()
         console.log(getValidItems())
     }
 
