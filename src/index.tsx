@@ -567,13 +567,14 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
         }
     }
 
-
-    useKeyPress('Home', (e) => {
-        e.preventDefault()
-        updateSelectedToIndex(0)
-        console.log('home')
-        console.log(getValidItems());
-    })
+    window.onkeydown = (e) => {
+        if (e.code == 'Home') {
+            e.preventDefault()
+            updateSelectedToIndex(0)
+            console.log('home')
+            console.log(getValidItems());
+        }
+    }
 
     return (
         <div
