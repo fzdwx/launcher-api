@@ -237,7 +237,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
                         schedule(1, scrollTop)
                         schedule(1, selectFirstItem2)
                     } else {
-                        schedule(1, selectFirstItem)
+                        schedule(1, selectFirstItem2)
                     }
                 } else if (key === 'value') {
                     // opts is a boolean referring to whether it should NOT be scrolled into view
@@ -415,7 +415,8 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
     }
 
     function selectFirstItem2() {
-        updateSelectedToIndex(0)
+        const item = getAllItems()
+        console.log(item[0])
     }
 
     /** Filters the current items. */
