@@ -24,4 +24,6 @@ export interface LauncherApi {
     set<T>(key: string, value: T): Promise<void>
 
     get<T>(key: string): Promise<T>
+
+    loadMainView(): void
 }
