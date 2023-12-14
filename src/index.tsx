@@ -480,7 +480,6 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
 
     function updateSelectedToIndex(index: number) {
         const items = getValidItems()
-        console.log(items)
         const item = items[index]
         if (item) store.setState('value', item.getAttribute(VALUE_ATTR))
     }
@@ -560,6 +559,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
         if (e.code == 'Home') {
             e.preventDefault()
             updateSelectedToIndex(0)
+            scrollTop()
         }
     }
 
@@ -571,7 +571,6 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
             onKeyDown={(e) => {
                 etc.onKeyDown?.(e)
 
-                console.log(e)
                 switch (e.key) {
                     case 'n':
                     case 'j': {
@@ -598,7 +597,6 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
                         break
                     }
                     case 'Home': {
-                        console.log(e)
                         // First item
                         e.preventDefault()
                         updateSelectedToIndex(0)
