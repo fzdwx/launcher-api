@@ -600,9 +600,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
                             // First item
                             e.preventDefault()
                             updateSelectedToIndex(0)
-                            useTimeout(()=>{
-                                scrollTop()
-                            },50)
+                            scrollTop()
                             break
                         }
                         case 'End': {
