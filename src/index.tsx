@@ -562,6 +562,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
             updateSelectedToIndex(0)
             updateSelectedByChange(-1)
             updateSelectedByChange(1)
+            console.log("!23123")
         }
     }
 
