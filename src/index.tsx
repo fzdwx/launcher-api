@@ -9,6 +9,7 @@ import {
 } from './icon'
 import mitt from "mitt";
 import {useKeyPress, useTimeout} from "ahooks";
+import {sleep} from "ahooks/es/utils/testingHelpers";
 
 type Children = { children?: React.ReactNode }
 type DivProps = React.HTMLAttributes<HTMLDivElement>
@@ -559,7 +560,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
         if (e.code == 'Home') {
             e.preventDefault()
             updateSelectedToIndex(0)
-            useTimeout(scrollTop, 50)
+            sleep(50).then(scrollTop)
         }
     }
 
