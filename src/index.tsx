@@ -8,7 +8,7 @@ import {
     StarIcon
 } from './icon'
 import mitt from "mitt";
-import {useKeyPress} from "ahooks";
+import {useKeyPress, useTimeout} from "ahooks";
 
 type Children = { children?: React.ReactNode }
 type DivProps = React.HTMLAttributes<HTMLDivElement>
@@ -600,7 +600,9 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
                             // First item
                             e.preventDefault()
                             updateSelectedToIndex(0)
-                            schedule(6, scrollSelectedIntoView)
+                            useTimeout(()=>{
+                                scrollSelectedIntoView()
+                            },50)
                             break
                         }
                         case 'End': {
