@@ -570,6 +570,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
             onKeyDown={(e) => {
                 etc.onKeyDown?.(e)
 
+                console.log(e)
                 if (!e.defaultPrevented) {
                     switch (e.key) {
                         case 'n':
