@@ -601,7 +601,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
                             e.preventDefault()
                             updateSelectedToIndex(0)
                             useTimeout(()=>{
-                                scrollSelectedIntoView()
+                                scrollTop()
                             },50)
                             break
                         }
