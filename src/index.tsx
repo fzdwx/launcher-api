@@ -560,7 +560,8 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
         if (e.code == 'Home') {
             e.preventDefault()
             updateSelectedToIndex(0)
-            sleep(50).then(scrollTop)
+            updateSelectedByChange(-1)
+            updateSelectedByChange(1)
         }
     }
 
