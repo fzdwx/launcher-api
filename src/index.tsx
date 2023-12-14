@@ -559,7 +559,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
         if (e.code == 'Home') {
             e.preventDefault()
             updateSelectedToIndex(0)
-            scrollTop()
+            schedule(5, scrollTop)
         }
     }
 
