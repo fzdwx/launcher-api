@@ -572,55 +572,56 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
             cmdk-root=""
             onKeyDown={(e) => {
                 etc.onKeyDown?.(e)
-
-                switch (e.key) {
-                    case 'n':
-                    case 'j': {
-                        // vim keybind down
-                        if (vimBindings && e.ctrlKey) {
+                if (!e.defaultPrevented) {
+                    switch (e.key) {
+                        case 'n':
+                        case 'j': {
+                            // vim keybind down
+                            if (vimBindings && e.ctrlKey) {
+                                next(e)
+                            }
+                            break
+                        }
+                        case 'ArrowDown': {
                             next(e)
+                            break
                         }
-                        break
-                    }
-                    case 'ArrowDown': {
-                        next(e)
-                        break
-                    }
-                    case 'p':
-                    case 'k': {
-                        // vim keybind up
-                        if (vimBindings && e.ctrlKey) {
+                        case 'p':
+                        case 'k': {
+                            // vim keybind up
+                            if (vimBindings && e.ctrlKey) {
+                                prev(e)
+                            }
+                            break
+                        }
+                        case 'ArrowUp': {
                             prev(e)
+                            break
                         }
-                        break
-                    }
-                    case 'ArrowUp': {
-                        prev(e)
-                        break
-                    }
-                    case 'Home': {
-                        // First item
-                        e.preventDefault()
-                        updateSelectedToIndex(0)
-                        scrollTop()
-                        break
-                    }
-                    case 'End': {
-                        // Last item
-                        e.preventDefault()
-                        last()
-                        break
-                    }
-                    case 'Enter': {
-                        // Check if IME composition is finished before triggering onSelect
-                        // This prevents unwanted triggering while user is still inputting text with IME
-                        if (!e.nativeEvent.isComposing) {
-                            // Trigger item onSelect
+                        case 'Home': {
+                            // First item
                             e.preventDefault()
-                            const item = getSelectedItem()
-                            if (item) {
-                                const event = new Event(SELECT_EVENT)
-                                item.dispatchEvent(event)
+                            updateSelectedToIndex(0)
+                            scrollTop()
+                            break
+                        }
+                        case 'End': {
+                            // Last item
+                            e.preventDefault()
+                            last()
+                            break
+                        }
+                        case 'Enter': {
+                            // Check if IME composition is finished before triggering onSelect
+                            // This prevents unwanted triggering while user is still inputting text with IME
+                            if (!e.nativeEvent.isComposing) {
+                                // Trigger item onSelect
+                                e.preventDefault()
+                                const item = getSelectedItem()
+                                if (item) {
+                                    const event = new Event(SELECT_EVENT)
+                                    item.dispatchEvent(event)
+                                }
                             }
                         }
                     }
