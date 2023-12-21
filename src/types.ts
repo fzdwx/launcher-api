@@ -26,4 +26,6 @@ export interface LauncherApi {
     get<T>(key: string): Promise<T>
 
     loadMainView(): void
+
+    executeJs(js: string): Promise<any>
 }
