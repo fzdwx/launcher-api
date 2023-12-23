@@ -2,14 +2,9 @@ import * as RadixDialog from '@radix-ui/react-dialog'
 import * as React from 'react'
 import {commandScore} from './command-score'
 import {LauncherApi} from './types'
-import {
-    WindowIcon,
-    FinderIcon,
-    StarIcon
-} from './icon'
-import mitt from "mitt";
-import {useKeyPress, useTimeout} from "ahooks";
-import {sleep} from "ahooks/es/utils/testingHelpers";
+import {WindowIcon, StarIcon, FinderIcon} from './icon'
+
+export {getActionCommand} from './api'
 
 type Children = { children?: React.ReactNode }
 type DivProps = React.HTMLAttributes<HTMLDivElement>
