@@ -27,7 +27,7 @@ export const Footer: React.FC<{
         </div>
 
         {
-            actions ? <>
+            actionsR.length > 0 ? <>
                     <FooterHr/>
                     <FooterActions
                         onSubCommandShow={() => {
