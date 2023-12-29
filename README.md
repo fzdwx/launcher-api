@@ -6,15 +6,12 @@ A collection of api for [launcher](https://github.com/fzdwx/launcher)
 pnpm add launcher-api
 ```
 
-add to vite-env.d.ts
+call api:
 
 ```ts
 /// <reference types="vite/client" />
-import {LauncherApi} from "launcher-api";
+import {clipboard, config, getActionCommand, mainView, shell} from "launcher-api";
 
-declare global {
-    interface Window {
-        launcher: LauncherApi
-    }
-}
+clipboard.set("hello world");
+clipboard.get();
 ```
