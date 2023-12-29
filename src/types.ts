@@ -13,9 +13,9 @@ export interface LauncherApi {
 
     setClipText(text: string): void
 
-    openUrl(url: string): void
+    openUrl(url: string): Promise<void>
 
-    openPath(path: string): void
+    openPath(path: string): Promise<void>
 
     hide(): void
 
