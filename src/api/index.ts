@@ -30,3 +30,14 @@ export const config = () => {
         set: window.launcher.set
     }
 }
+
+/**
+ * @description 打开一个网址
+ */
+export const openUrl = window.launcher.openUrl
+
+/**
+ * @description 打开一个路径
+ */
+export const openPath = window.launcher.openPath
+
