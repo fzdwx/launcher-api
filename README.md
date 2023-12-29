@@ -9,7 +9,6 @@ pnpm add launcher-api
 call api:
 
 ```ts
-/// <reference types="vite/client" />
 import {clipboard, config, getActionCommand, mainView, shell} from "launcher-api";
 
 clipboard.set("hello world");
