@@ -65,6 +65,6 @@ interface MainView {
 export const mainView: MainView = {
     hide: window.launcher.hide,
     show: window.launcher.show,
-    exit: window.launcher.backToSelf,
+    exit: window.launcher.loadMainView,
 }
 

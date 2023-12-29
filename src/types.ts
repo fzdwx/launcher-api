@@ -21,8 +21,6 @@ export interface LauncherApi {
 
     show(): void
 
-    backToSelf(): void
-
     set<T>(key: string, value: T): Promise<void>
 
     get<T>(key: string): Promise<T>
