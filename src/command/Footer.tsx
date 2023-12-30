@@ -29,28 +29,35 @@ export const Footer: React.FC<{
             {content(current)}
         </div>
 
-        {
-            currentActions.length > 0 ? <>
-                    <FooterHr/>
-                    <FooterActions
-                        onSubCommandShow={() => {
-                            if (onSubCommandShow) {
-                                onSubCommandShow()
-                            }
-                        }}
-                        onSubCommandHide={() => {
-                            if (onSubCommandHide) {
-                                onSubCommandHide()
-                            }
-                        }}
-                        actions={currentActions}
-                    />
-                </>
-                : <></>
-        }
+        <FooterActionRender actions={currentActions}/>
     </div>
 }
 
+const FooterActionRender: React.FC<{
+    actions: ActionImpl[],
+    onSubCommandHide?: () => void
+    onSubCommandShow?: () => void
+}> = ({actions,onSubCommandHide,onSubCommandShow}) => {
+    if (actions.length === 0) {
+        return <></>
+    }
+    return <>
+        <FooterHr/>
+        <FooterActions
+            onSubCommandShow={() => {
+                if (onSubCommandShow) {
+                    onSubCommandShow()
+                }
+            }}
+            onSubCommandHide={() => {
+                if (onSubCommandHide) {
+                    onSubCommandHide()
+                }
+            }}
+            actions={actions}
+        />
+    </>
+}
 
 export const FooterHr: React.FC = () => {
     return (
