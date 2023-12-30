@@ -7,7 +7,7 @@ import * as Popover from "@radix-ui/react-popover";
 export const Footer: React.FC<{
     current: string | ActionImpl | null,
     icon: string | React.ReactElement
-    actions?: (current: string | ActionImpl | null) => Action[]
+    actions: (current: string | ActionImpl | null, changeVisible: () => void) => Action[]
     content: (current?: string | ActionImpl | null) => string | React.ReactElement
     onSubCommandHide?: () => void
     onSubCommandShow?: () => void
@@ -19,15 +19,6 @@ export const Footer: React.FC<{
           onSubCommandShow,
           onSubCommandHide
       }) => {
-    const [currentActions, setCurrentActions] = useState<ActionImpl[]>([])
-
-    useEffect(() => {
-        const res = actions ? actions(current).map(a => ActionImpl.create(a, {
-            store: {}
-        })) : [];
-        setCurrentActions(res)
-    }, [current])
-
     return <div className='command-footer'>
         <div className='command-footer-icon'>
             {icon}
@@ -39,19 +30,22 @@ export const Footer: React.FC<{
         <FooterActionRender
             onSubCommandHide={onSubCommandHide}
             onSubCommandShow={onSubCommandShow}
-            actions={currentActions}
+            actions={actions}
+            current={current}
         />
     </div>
 }
 
 const FooterActionRender: React.FC<{
-    actions: ActionImpl[],
+    actions: (current: string | ActionImpl | null, changeVisible: () => void) => Action[]
+    current: string | ActionImpl | null,
     onSubCommandHide?: () => void
     onSubCommandShow?: () => void
 }> = ({
           actions,
           onSubCommandHide,
           onSubCommandShow,
+          current
       }) => {
     if (actions.length === 0) {
         return <></>
@@ -60,6 +54,7 @@ const FooterActionRender: React.FC<{
     return <>
         <FooterHr/>
         <FooterActions
+            current={current}
             onSubCommandShow={() => {
                 if (onSubCommandShow) {
                     onSubCommandShow()
@@ -82,7 +77,8 @@ export const FooterHr: React.FC = () => {
 }
 
 const FooterActions: React.FC<{
-    actions: ActionImpl[],
+    actions: (current: string | ActionImpl | null, changeVisible: () => void) => Action[]
+    current: string | ActionImpl | null,
     initialOpen?: boolean,
     initialShortcut?: string // default 'ctrl.k'
     onSubCommandShow: () => void
@@ -93,6 +89,7 @@ const FooterActions: React.FC<{
           initialShortcut,
           onSubCommandShow,
           onSubCommandHide,
+          current
       }) => {
     const [open, setOpen] = React.useState(initialOpen || false)
     const [shortcut, setShortcut] = React.useState(initialShortcut || 'ctrl.k')
@@ -107,9 +104,16 @@ const FooterActions: React.FC<{
         }
     }, [open])
 
+    const [currentActions, setCurrentActions] = useState<Action[]>([])
+
+    useEffect(() => {
+        const res = actions ? actions(current, changeVisible) : []
+        setCurrentActions(res)
+    }, [current, actions])
+
     const [inputValue, setInputValue] = React.useState("");
     const {useRegisterActions, state, setActiveIndex, setRootActionId} = useActionStore();
-    useRegisterActions(actions, [actions])
+    useRegisterActions(currentActions, [currentActions])
 
     const {results, rootActionId} = useMatches(inputValue, state.actions, state.rootActionId);
 
