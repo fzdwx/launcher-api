@@ -9,8 +9,8 @@ export const Footer: React.FC<{
     icon: string | React.ReactElement
     actions?: (current: string | ActionImpl | null) => Action[]
     content: (current?: string | ActionImpl | null) => string | React.ReactElement
-    onSubCommandShow?: () => void
     onSubCommandHide?: () => void
+    onSubCommandShow?: () => void
 }> = ({current, actions, icon, content, onSubCommandShow, onSubCommandHide}) => {
     const [currentActions, setCurrentActions] = useState([])
 
