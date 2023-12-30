@@ -11,15 +11,22 @@ export const Footer: React.FC<{
     content: (current?: string | ActionImpl | null) => string | React.ReactElement
     onSubCommandHide?: () => void
     onSubCommandShow?: () => void
-}> = ({current, actions, icon, content, onSubCommandShow, onSubCommandHide}) => {
-    const [currentActions, setCurrentActions] = useState([])
+}> = ({
+          current,
+          actions,
+          icon,
+          content,
+          onSubCommandShow,
+          onSubCommandHide
+      }) => {
+    const [currentActions, setCurrentActions] = useState<ActionImpl[]>([])
 
     useEffect(() => {
         const res = actions ? actions(current).map(a => ActionImpl.create(a, {
             store: {}
         })) : [];
         setCurrentActions(res)
-    }, [current, actions])
+    }, [current])
 
     return <div className='command-footer'>
         <div className='command-footer-icon'>
@@ -29,7 +36,11 @@ export const Footer: React.FC<{
             {content(current)}
         </div>
 
-        <FooterActionRender actions={currentActions}/>
+        <FooterActionRender
+            onSubCommandHide={onSubCommandHide}
+            onSubCommandShow={onSubCommandShow}
+            actions={currentActions}
+        />
     </div>
 }
 
@@ -37,10 +48,15 @@ const FooterActionRender: React.FC<{
     actions: ActionImpl[],
     onSubCommandHide?: () => void
     onSubCommandShow?: () => void
-}> = ({actions,onSubCommandHide,onSubCommandShow}) => {
+}> = ({
+          actions,
+          onSubCommandHide,
+          onSubCommandShow,
+      }) => {
     if (actions.length === 0) {
         return <></>
     }
+
     return <>
         <FooterHr/>
         <FooterActions
@@ -76,7 +92,7 @@ const FooterActions: React.FC<{
           initialOpen,
           initialShortcut,
           onSubCommandShow,
-          onSubCommandHide
+          onSubCommandHide,
       }) => {
     const [open, setOpen] = React.useState(initialOpen || false)
     const [shortcut, setShortcut] = React.useState(initialShortcut || 'ctrl.k')
@@ -93,7 +109,8 @@ const FooterActions: React.FC<{
 
     const [inputValue, setInputValue] = React.useState("");
     const {useRegisterActions, state, setActiveIndex, setRootActionId} = useActionStore();
-    useRegisterActions(actions)
+    useRegisterActions(actions, [actions])
+
     const {results, rootActionId} = useMatches(inputValue, state.actions, state.rootActionId);
 
     return <Popover.Root open={open} onOpenChange={setOpen} modal>
