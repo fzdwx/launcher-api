@@ -1,6 +1,6 @@
 import {Action, ActionImpl, Input, RenderItem, ResultsRender, useActionStore, useMatches} from ".";
 import * as React from "react";
-import {useMemo} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {useKeyPress} from "ahooks";
 import * as Popover from "@radix-ui/react-popover";
 
@@ -12,11 +12,14 @@ export const Footer: React.FC<{
     onSubCommandShow?: () => void
     onSubCommandHide?: () => void
 }> = ({current, actions, icon, content, onSubCommandShow, onSubCommandHide}) => {
-    const actionsR = useMemo(() => {
-        return actions ? actions(current).map(a => ActionImpl.create(a, {
+    const [currentActions, setCurrentActions] = useState([])
+
+    useEffect(() => {
+        const res = actions ? actions(current).map(a => ActionImpl.create(a, {
             store: {}
-        })) : []
-    }, [current, actions]);
+        })) : [];
+        setCurrentActions(res)
+    }, [current, actions])
 
     return <div className='command-footer'>
         <div className='command-footer-icon'>
@@ -27,7 +30,7 @@ export const Footer: React.FC<{
         </div>
 
         {
-            actionsR.length > 0 ? <>
+            currentActions.length > 0 ? <>
                     <FooterHr/>
                     <FooterActions
                         onSubCommandShow={() => {
@@ -40,7 +43,7 @@ export const Footer: React.FC<{
                                 onSubCommandHide()
                             }
                         }}
-                        actions={actionsR}
+                        actions={currentActions}
                     />
                 </>
                 : <></>
