@@ -152,6 +152,7 @@ export const ResultsRender: React.FC<ResultsRenderProps> = (props) => {
                     overflow: "auto",
                     width: props.width || '100%',
                 }}
+                className='command-listbox-container'
             >
                 <div
                     role="listbox"
