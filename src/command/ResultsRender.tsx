@@ -1,6 +1,6 @@
 import {ActionId, ActionImpl, getListboxItemId, KBAR_LISTBOX} from "./";
 import * as React from "react";
-import {useVirtual} from "react-virtual";
+import {useVirtualizer} from "@tanstack/react-virtual";
 import {usePointerMovedSinceMount} from "./utils";
 
 const START_INDEX = 0;
@@ -33,7 +33,7 @@ interface ResultsRenderProps {
 }
 
 export const ResultsRender: React.FC<ResultsRenderProps> = (props) => {
-    const activeRef = React.useRef<HTMLDivElement>(null);
+    const activeRef = React.useRef<HTMLDivElement | null>(null);
     const parentRef = React.useRef(null);
 
     // store a ref to all items so we do not have to pass
@@ -41,11 +41,12 @@ export const ResultsRender: React.FC<ResultsRenderProps> = (props) => {
     const itemsRef = React.useRef(props.items);
     itemsRef.current = props.items;
 
-    const rowVirtualizer = useVirtual({
-        size: itemsRef.current.length,
-        parentRef,
+    const rowVirtualizer = useVirtualizer({
+        count: itemsRef.current.length,
+        estimateSize: () => 66,
+        measureElement: (element) => element.clientHeight,
+        getScrollElement: () => parentRef.current,
     });
-
 
     React.useEffect(() => {
         const handler = (event) => {
@@ -159,12 +160,12 @@ export const ResultsRender: React.FC<ResultsRenderProps> = (props) => {
                     role="listbox"
                     id={KBAR_LISTBOX}
                     style={{
-                        height: `${rowVirtualizer.totalSize}px`,
+                        height: `${rowVirtualizer.getTotalSize()}px`,
                         width: "100%",
                     }}
                     className='command-listbox'
                 >
-                    {rowVirtualizer.virtualItems.map((virtualRow) => {
+                    {rowVirtualizer.getVirtualItems().map((virtualRow) => {
                         const item = itemsRef.current[virtualRow.index];
                         const handlers = typeof item !== "string" && {
                             onPointerMove: () =>
@@ -178,7 +179,11 @@ export const ResultsRender: React.FC<ResultsRenderProps> = (props) => {
 
                         return (
                             <div
-                                ref={active ? activeRef : null}
+                                ref={(elem) => {
+                                    rowVirtualizer.measureElement(elem);
+                                    if (active) activeRef.current = elem;
+                                }}
+                                data-index={virtualRow.index}
                                 id={getListboxItemId(virtualRow.index)}
                                 role="option"
                                 aria-selected={active}
@@ -192,15 +197,10 @@ export const ResultsRender: React.FC<ResultsRenderProps> = (props) => {
                                 }}
                                 {...handlers}
                             >
-                                {React.cloneElement(
-                                    props.onRender({
-                                        item,
-                                        active,
-                                    }),
-                                    {
-                                        ref: virtualRow.measureRef,
-                                    }
-                                )}
+                                {props.onRender({
+                                    item,
+                                    active,
+                                })}
                             </div>
                         );
                     })}
