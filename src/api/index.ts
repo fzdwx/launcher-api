@@ -68,3 +68,9 @@ export const mainView: MainView = {
     exit: window.launcher.loadMainView,
 }
 
+export const trim = (str: string) => {
+    if (str.startsWith('"') && str.endsWith('"')) {
+        return str.slice(1, -1)
+    }
+    return str
+}
