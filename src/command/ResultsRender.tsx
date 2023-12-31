@@ -106,6 +106,7 @@ export const ResultsRender: React.FC<ResultsRenderProps> = (props) => {
     // entire rowVirtualizer in the dependencies array.
     const {scrollToIndex} = rowVirtualizer;
     React.useEffect(() => {
+        if (itemsRef.current.length < 1) return;
         scrollToIndex(props.activeIndex, {
             // ensure that if the first item in the list is a group
             // name and we are focused on the second item, to not
