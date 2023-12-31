@@ -26,8 +26,8 @@ export const clipboard: Clipboard = {
 }
 
 interface Config {
-    set: (key: string, value: any) => Promise<void>,
-    get: (key: string) => Promise<any>
+    set: (key: string, value: string) => Promise<void>,
+    get: (key: string) => Promise<string>
 }
 
 /**
