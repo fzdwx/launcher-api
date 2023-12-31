@@ -16,6 +16,7 @@ interface ResultsRenderProps {
     maxHeight?: number;
     height?: number | 'auto';
     width?: string | 'auto' | "100%";
+    className?: string;
     detailsClassName?: string;
 
     details?: React.ReactElement;
@@ -152,7 +153,7 @@ export const ResultsRender: React.FC<ResultsRenderProps> = (props) => {
                     overflow: "auto",
                     width: props.width || '100%',
                 }}
-                className='command-listbox-container'
+                className={['command-listbox-container', props.className ?? ""].join(' ')}
             >
                 <div
                     role="listbox"
