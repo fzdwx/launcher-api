@@ -74,3 +74,12 @@ export const trim = (str: string) => {
     }
     return str
 }
+
+// @ts-ignore
+window.mainView = mainView
+// @ts-ignore
+window.shell = shell
+// @ts-ignore
+window.config = config
+// @ts-ignore
+window.clipboard = clipboard
