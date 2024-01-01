@@ -75,6 +75,29 @@ export const trim = (str: string) => {
     return str
 }
 
+export interface Assets {
+    upload: (content: string) => Promise<AssetsUploadResponse>
+    config: () => Promise<boolean>
+}
+
+export const assets: Assets = {
+    upload: async (content: string) => {
+        const resp = await shell.exec('ray', ['assets', 'upload', "content", atob(content)])
+        return resp as AssetsUploadResponse
+    },
+    config: async () => {
+        const resp = await shell.exec('ray', ['assets', 'check'])
+        return resp as boolean
+    }
+}
+
+export interface AssetsUploadResponse {
+    url: string
+    success: boolean
+    msg: string
+}
+
+
 // @ts-ignore
 window.mainView = mainView
 // @ts-ignore
@@ -83,3 +106,5 @@ window.shell = shell
 window.config = config
 // @ts-ignore
 window.clipboard = clipboard
+// @ts-ignore
+window.assets = assets
