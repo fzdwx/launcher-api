@@ -77,7 +77,7 @@ export const trim = (str: string) => {
 
 export interface Assets {
     upload: (contentByes64: string) => Promise<AssetsUploadResponse>
-    config: () => Promise<boolean>
+    config: () => Promise<string>
 }
 
 export const assets: Assets = {
@@ -86,8 +86,7 @@ export const assets: Assets = {
         return JSON.parse(resp) as AssetsUploadResponse
     },
     config: async () => {
-        //@ts-ignore
-        return await shell.exec('ray', ['assets', 'check']) as boolean
+        return await shell.exec('ray', ['assets', 'check'])
     }
 }
 
