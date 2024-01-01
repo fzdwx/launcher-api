@@ -39,8 +39,8 @@ export const config: Config = {
 }
 
 interface Shell {
-    exec: (command: string, args?: Array<string>, terminal?: boolean) => Promise<any>,
-    spawn: (command: string, args?: Array<string>) => Promise<any>,
+    exec: (command: string, args?: Array<string>, terminal?: boolean, stdin?: string) => Promise<string>,
+    spawn: (command: string, args?: Array<string>) => Promise<string>,
     openPath: (path: string) => Promise<void>,
     openUrl: (url: string) => Promise<void>
 }
@@ -82,12 +82,12 @@ export interface Assets {
 
 export const assets: Assets = {
     upload: async (contentByes64: string) => {
-        const resp = await shell.exec('ray', ['assets', 'upload', "content", contentByes64])
-        return resp as AssetsUploadResponse
+        const resp = await shell.exec('ray', ['assets', 'upload'], false, contentByes64)
+        return JSON.parse(resp) as AssetsUploadResponse
     },
     config: async () => {
         const resp = await shell.exec('ray', ['assets', 'check'])
-        return resp as boolean
+        return resp === 'true'
     }
 }
 

@@ -1,9 +1,9 @@
 export interface LauncherApi {
     hello(): Promise<string>
 
-    execCommand(command: string, args?: Array<string>, terminal?: boolean): Promise<any>
+    execCommand(command: string, args?: Array<string>, terminal?: boolean, stdin?: string): Promise<string>
 
-    spawn(command: string, args?: Array<string>): Promise<any>
+    spawn(command: string, args?: Array<string>): Promise<string>
 
     getPath(name: 'home' | 'appData' | 'userData' | 'sessionData' | 'temp' | 'exe' | 'module' | 'desktop' | 'documents' | 'downloads' | 'music' | 'pictures' | 'videos' | 'recent' | 'logs' | 'crashDumps'): Promise<string>
 
