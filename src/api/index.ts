@@ -86,8 +86,8 @@ export const assets: Assets = {
         return JSON.parse(resp) as AssetsUploadResponse
     },
     config: async () => {
-        const resp = await shell.exec('ray', ['assets', 'check'])
-        return resp === 'true'
+        //@ts-ignore
+        return await shell.exec('ray', ['assets', 'check']) as boolean
     }
 }
 
