@@ -76,13 +76,13 @@ export const trim = (str: string) => {
 }
 
 export interface Assets {
-    upload: (content: string) => Promise<AssetsUploadResponse>
+    upload: (contentByes64: string) => Promise<AssetsUploadResponse>
     config: () => Promise<boolean>
 }
 
 export const assets: Assets = {
-    upload: async (content: string) => {
-        const resp = await shell.exec('ray', ['assets', 'upload', "content", atob(content)])
+    upload: async (contentByes64: string) => {
+        const resp = await shell.exec('ray', ['assets', 'upload', "content", contentByes64])
         return resp as AssetsUploadResponse
     },
     config: async () => {
